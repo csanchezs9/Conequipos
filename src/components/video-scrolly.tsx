@@ -41,8 +41,10 @@ export function VideoScrolly() {
   const root = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    // Con reduced-motion el pin y el cambio de escenas SIGUEN funcionando
+    // (es contenido, no decoracion); solo se elimina el desplazamiento en Y.
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
+    const shift = reduce ? 0 : 50;
 
     const ctx = gsap.context((self) => {
       const videos = self.selector!(".vs-video") as HTMLVideoElement[];
@@ -68,14 +70,14 @@ export function VideoScrolly() {
       for (let i = 1; i < SCENES.length; i++) {
         tl.to(
           scenes[i - 1],
-          { autoAlpha: 0, y: -50, duration: 0.35, ease: "power2.in" },
+          { autoAlpha: 0, y: -shift, duration: 0.35, ease: "power2.in" },
           i - 0.4
         )
           .to(videos[i - 1], { autoAlpha: 0, duration: 0.45 }, i - 0.25)
           .to(videos[i], { autoAlpha: 1, duration: 0.45 }, i - 0.25)
           .fromTo(
             scenes[i],
-            { autoAlpha: 0, y: 50 },
+            { autoAlpha: 0, y: shift },
             { autoAlpha: 1, y: 0, duration: 0.45, ease: "power2.out" },
             i - 0.1
           );
