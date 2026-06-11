@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Hero } from "@/components/hero";
+import { VideoScrolly } from "@/components/video-scrolly";
 import { Marquee } from "@/components/marquee";
 import { ProductCard } from "@/components/product-card";
 import { StatCounter } from "@/components/stat-counter";
@@ -32,6 +33,8 @@ export default function Home() {
   return (
     <>
       <Hero />
+
+      <VideoScrolly />
 
       <Marquee
         className="border-y border-line"
