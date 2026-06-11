@@ -4,7 +4,7 @@ import { Marquee } from "@/components/marquee";
 import { ProductCard } from "@/components/product-card";
 import { StatCounter } from "@/components/stat-counter";
 import { Magnetic } from "@/components/magnetic";
-import { ArrowRight } from "@/components/icons";
+import { ArrowRight, CategoryIcon } from "@/components/icons";
 import { categories, products } from "@/data/catalog";
 import { waLink } from "@/lib/utils";
 
@@ -48,22 +48,28 @@ export default function Home() {
 
       {/* CATEGORÍAS */}
       <section className="container-x py-24 md:py-36">
-        <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
-          <div>
+        <div className="mb-14 flex flex-wrap items-end justify-between gap-x-10 gap-y-6">
+          <div className="max-w-2xl">
             <p data-reveal className="kicker mb-4">
-              Catálogo
+              Catálogo por especialidad
             </p>
-            <h2 data-reveal className="display-lg max-w-[16ch]">
-              Todo lo que tu obra necesita, en un solo lugar
+            <h2 data-reveal className="display-lg text-balance">
+              Cada frente de tu obra,{" "}
+              <span className="text-brand">con su equipo listo</span>
             </h2>
+            <p data-reveal className="mt-5 max-w-md text-mute">
+              {categories.length} categorías y {products.length} equipos
+              certificados, mantenidos y disponibles para despachar. Elige una
+              especialidad y cotiza en minutos.
+            </p>
           </div>
           <Link
             data-reveal
             href="/equipos"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-brand transition-all hover:gap-3"
+            className="group inline-flex items-center gap-2 rounded-full border border-line px-5 py-3 text-sm font-semibold text-bone transition-colors hover:border-brand hover:text-brand"
           >
-            Ver todos los equipos
-            <ArrowRight />
+            Ver todo el catálogo
+            <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
 
@@ -74,18 +80,30 @@ export default function Home() {
               href={`/categoria/${c.slug}`}
               data-reveal
               data-reveal-delay={(i % 3) * 0.05}
-              className="group relative flex min-h-44 flex-col justify-between bg-ink-2 p-7 transition-colors duration-500 hover:bg-ink-3"
+              className="group relative isolate flex min-h-52 flex-col justify-between overflow-hidden bg-ink-2 p-7"
             >
-              <span className="font-mono text-xs text-mute">
-                {String(i + 1).padStart(2, "0")}
-              </span>
+              {/* Wipe de marca: sube desde abajo en hover */}
+              <span className="absolute inset-0 -z-10 translate-y-full bg-brand transition-transform duration-500 [transition-timing-function:var(--ease-out-expo)] group-hover:translate-y-0" />
+
+              <div className="flex items-start justify-between">
+                <CategoryIcon
+                  slug={c.slug}
+                  className="text-brand transition-colors duration-500 group-hover:text-white"
+                />
+                <span className="font-mono text-xs text-mute transition-colors duration-500 group-hover:text-white/70">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+
               <div>
-                <h3 className="font-display text-2xl text-bone transition-colors group-hover:text-brand">
+                <h3 className="font-display text-2xl leading-tight text-bone transition-colors duration-500 group-hover:text-white">
                   {c.name}
                 </h3>
-                <p className="mt-1 text-sm text-mute">{c.count} equipos</p>
+                <p className="mt-2 flex items-center gap-2 text-sm text-mute transition-colors duration-500 group-hover:text-white/85">
+                  {c.count} {c.count === 1 ? "equipo" : "equipos"}
+                  <ArrowRight className="h-4 w-4 -translate-x-1 opacity-0 transition-all duration-500 group-hover:translate-x-0 group-hover:opacity-100" />
+                </p>
               </div>
-              <ArrowRight className="absolute right-7 top-7 h-5 w-5 text-mute opacity-0 transition-all duration-500 group-hover:text-brand group-hover:opacity-100" />
             </Link>
           ))}
         </div>

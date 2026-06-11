@@ -13,11 +13,20 @@ export function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    // Si hay hero de video (home), la barra queda transparente mientras el
+    // video siga cubriendola — incluye todo el tramo pineado del scrolly.
+    const hero = document.querySelector<HTMLElement>("[data-video-hero]");
+    const onScroll = () => {
+      if (hero) {
+        setScrolled(hero.getBoundingClientRect().bottom < 80);
+      } else {
+        setScrolled(window.scrollY > 40);
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => setOpen(false), [pathname]);
 

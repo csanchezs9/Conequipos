@@ -60,9 +60,9 @@ export function VideoScrolly() {
         scrollTrigger: {
           trigger: root.current,
           start: "top top",
-          end: "+=260%",
+          end: "+=400%",
           pin: true,
-          scrub: 0.7,
+          scrub: 1.2,
           onUpdate: (st) => {
             const idx = Math.min(2, Math.floor(st.progress * 3));
             const el = root.current?.querySelector(".vs-count");
@@ -78,7 +78,7 @@ export function VideoScrolly() {
       });
 
       // Cada transicion: el panel siguiente SUBE desde abajo y se superpone,
-      // con parallax interno del video. Rapida (0.5 de 1 unidad por escena).
+      // con parallax interno del video. Lenta y pausada (0.85 de 1 unidad).
       for (let i = 1; i < SCENES.length; i++) {
         const at = i;
         tl.fromTo(
@@ -117,7 +117,11 @@ export function VideoScrolly() {
   }, []);
 
   return (
-    <section ref={root} className="relative isolate h-svh overflow-hidden bg-black">
+    <section
+      ref={root}
+      data-video-hero
+      className="relative isolate h-svh overflow-hidden bg-black"
+    >
       {/* Paneles de video apilados — los siguientes arrancan abajo (CSS, no JS) */}
       {SCENES.map((s, i) => (
         <div
