@@ -39,7 +39,7 @@ export function Header() {
     >
       <div className="container-x flex h-18 items-center justify-between py-4">
         <Link href="/" aria-label="Conequipos — inicio">
-          <Logo className="h-7 md:h-8" />
+          <Logo className="h-10 md:h-12" />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">

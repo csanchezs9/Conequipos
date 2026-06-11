@@ -9,7 +9,7 @@ export function Footer() {
       <div className="container-x py-20">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
-            <Logo className="h-9" />
+            <Logo className="h-14 md:h-20" />
             <p className="mt-5 max-w-sm text-balance text-mute">
               Alquiler y venta de maquinaria certificada para construcción.
               Medellín · Itagüí · Antioquia.
