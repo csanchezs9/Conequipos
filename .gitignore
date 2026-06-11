@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scrape (datos crudos del sitio original)
+/scrape/
+dev.log

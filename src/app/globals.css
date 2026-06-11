@@ -1,26 +1,163 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =========================================================
+   CONEQUIPOS — Design System
+   Esencia: verde + negro (logo). Elevado a dark industrial premium.
+   ========================================================= */
+
+@theme {
+  /* Base */
+  --color-ink: #0a0b0c;          /* casi negro — fondo */
+  --color-ink-2: #101214;        /* superficie elevada */
+  --color-ink-3: #16191c;        /* cards */
+  --color-line: #23282d;         /* bordes hairline */
+  --color-bone: #f3f5f1;         /* texto principal (hueso) */
+  --color-mute: #8b938c;         /* texto secundario */
+
+  /* Marca */
+  --color-brand: #1fa64a;        /* verde Conequipos refinado */
+  --color-brand-glow: #34e27a;   /* verde neon — acentos / glow */
+  --color-brand-deep: #0d5a28;   /* verde profundo */
+
+  /* Industrial */
+  --color-hazard: #ffb800;       /* ambar maquinaria — micro acento */
+
+  /* Fuentes (cargadas via next/font como variables) */
+  --font-display: var(--font-space), system-ui, sans-serif;
+  --font-sans: var(--font-geist), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Easings premium */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Container */
+  --spacing-gutter: clamp(1.25rem, 4vw, 4rem);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  html {
+    background: var(--color-ink);
+    color: var(--color-bone);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  /* Lenis */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  ::selection {
+    background: var(--color-brand);
+    color: var(--color-ink);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-line);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-brand);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .container-x {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 96rem;
+    padding-inline: var(--spacing-gutter);
+  }
+
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-brand-glow);
+  }
+
+  /* Texto display fluido */
+  .display-xl {
+    font-size: clamp(2.75rem, 9vw, 9rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+  }
+  .display-lg {
+    font-size: clamp(2.25rem, 6vw, 5.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Grano sutil overlay */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .glow-brand {
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-brand) 40%, transparent),
+      0 0 40px -8px color-mix(in srgb, var(--color-brand-glow) 60%, transparent);
+  }
+
+  /* Reveal inicial (GSAP pone is-in) */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .animate-\[marquee_38s_linear_infinite\] {
+    animation: none !important;
+  }
 }
