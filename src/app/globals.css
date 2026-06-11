@@ -41,6 +41,14 @@
     border-color: var(--color-line);
   }
 
+  /* Tailwind v4 ya no pone cursor:pointer en botones — lo restauramos */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  label[for],
+  summary {
+    cursor: pointer;
+  }
+
   html {
     background: var(--color-ink);
     color: var(--color-bone);
