@@ -106,7 +106,7 @@ export function EquiposHero() {
             <div>
               <div className="font-display text-3xl font-bold leading-none md:text-4xl">
                 <span className="eh-count" data-to={products.length}>
-                  00
+                  {String(products.length).padStart(2, "0")}
                 </span>
               </div>
               <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-widest text-mute">
@@ -116,7 +116,7 @@ export function EquiposHero() {
             <div>
               <div className="font-display text-3xl font-bold leading-none md:text-4xl">
                 <span className="eh-count" data-to={categories.length}>
-                  00
+                  {String(categories.length).padStart(2, "0")}
                 </span>
               </div>
               <p className="mt-1 font-mono text-[0.62rem] uppercase tracking-widest text-mute">
