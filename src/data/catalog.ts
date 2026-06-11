@@ -110,7 +110,7 @@ export const products: Product[] = [
   },
   {
     "id": 1246,
-    "name": "Vibrador eléctrico &#8211; Northrock &#8211; Unicort",
+    "name": "Vibrador eléctrico – Northrock – Unicort",
     "slug": "vibrador-electrico-northrock-unicort",
     "description": "Herramienta para compactación de concreto fresco, eliminando aire interno para mejor resistencia.",
     "image": "/equipos/vibrador-electrico-northrock-unicort.jpg",
@@ -282,7 +282,7 @@ export const products: Product[] = [
   },
   {
     "id": 1230,
-    "name": "Sierra Circular MILWAUKEE 7 1.4&#8243;",
+    "name": "Sierra Circular MILWAUKEE 7 1.4″",
     "slug": "sierra-circular-milwaukee-7-1-4",
     "description": "Sierra robusta para corte rápido en madera",
     "image": "/equipos/sierra-circular-milwaukee-7-1-4.jpg",
@@ -291,7 +291,7 @@ export const products: Product[] = [
   },
   {
     "id": 1229,
-    "name": "Sierra Circular BOSH 7 1.4&#8243;",
+    "name": "Sierra Circular BOSH 7 1.4″",
     "slug": "sierra-circular-bosh-7-1-4",
     "description": "Equipo de corte para madera y materiales blandos, usado para cortes precisos en construcción y carpintería.",
     "image": "/equipos/sierra-circular-bosh-7-1-4.jpg",
@@ -384,7 +384,7 @@ export const products: Product[] = [
   },
   {
     "id": 1220,
-    "name": "Pulidora METABO 9&#8243;",
+    "name": "Pulidora METABO 9″",
     "slug": "pulidora-metabo-9",
     "description": "Herramienta eléctrica de disco grande para desbaste y corte en metal o concreto",
     "image": "/equipos/pulidora-metabo-9.jpg",

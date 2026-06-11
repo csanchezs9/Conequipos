@@ -15,13 +15,22 @@ fs.mkdirSync(path.dirname(OUT), { recursive: true });
 const products = JSON.parse(fs.readFileSync(path.join(SRC, "products.json"), "utf8"));
 const categories = JSON.parse(fs.readFileSync(path.join(SRC, "categories.json"), "utf8"));
 
-const stripHtml = (s) =>
+const NAMED = {
+  amp: "&", aacute: "á", eacute: "é", iacute: "í", oacute: "ó", uacute: "ú",
+  ntilde: "ñ", Aacute: "Á", Eacute: "É", Iacute: "Í", Oacute: "Ó", Uacute: "Ú",
+  Ntilde: "Ñ", nbsp: " ", ndash: "–", mdash: "—", hellip: "…",
+  laquo: "«", raquo: "»", deg: "°", ordm: "º", ordf: "ª",
+  quot: '"', apos: "'", lsquo: "‘", rsquo: "’", ldquo: "“", rdquo: "”",
+};
+
+const decode = (s) =>
   (s || "")
-    .replace(/<\/(p|li|br|h\d)>/gi, " ")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&amp;/g, "&").replace(/&aacute;/g, "á").replace(/&eacute;/g, "é")
-    .replace(/&iacute;/g, "í").replace(/&oacute;/g, "ó").replace(/&uacute;/g, "ú")
-    .replace(/&ntilde;/g, "ñ").replace(/&nbsp;/g, " ")
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
+    .replace(/&([a-zA-Z]+);/g, (m, n) => (n in NAMED ? NAMED[n] : m));
+
+const stripHtml = (s) =>
+  decode((s || "").replace(/<\/(p|li|br|h\d)>/gi, " ").replace(/<[^>]+>/g, " "))
     .replace(/\s+/g, " ")
     .trim();
 
@@ -50,7 +59,7 @@ const cats = categories
   .filter((c) => c.count > 0)
   .map((c) => ({
     id: c.id,
-    name: c.name,
+    name: decode(c.name),
     slug: c.slug,
     count: c.count,
   }));
@@ -72,12 +81,12 @@ for (const p of products) {
   }
   out.push({
     id: p.id,
-    name: p.name.trim(),
+    name: decode(p.name).trim(),
     slug,
     description: stripHtml(p.description) || stripHtml(p.short_description),
     image: localImg,
     categories: (p.categories || []).map((c) => c.slug),
-    categoryNames: (p.categories || []).map((c) => c.name),
+    categoryNames: (p.categories || []).map((c) => decode(c.name)),
   });
 }
 
