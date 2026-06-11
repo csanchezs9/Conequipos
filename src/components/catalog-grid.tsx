@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ProductCard } from "@/components/product-card";
+import { SearchIcon, CloseIcon } from "@/components/icons";
 import type { Category, Product } from "@/data/catalog";
 import { cn } from "@/lib/utils";
 
@@ -28,76 +29,113 @@ export function CatalogGrid({
     });
   }, [products, cat, q]);
 
+  const items = [
+    { slug: "all", name: "Todos los equipos", count: products.length },
+    ...categories.map((c) => ({ slug: c.slug, name: c.name, count: c.count })),
+  ];
+
   return (
-    <div>
-      {/* Controles */}
-      <div className="sticky top-16 z-30 -mx-[var(--spacing-gutter)] mb-10 border-y border-line bg-ink/80 px-[var(--spacing-gutter)] py-4 backdrop-blur-xl">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="flex flex-wrap gap-2">
-            <FilterChip active={cat === "all"} onClick={() => setCat("all")}>
-              Todos
-            </FilterChip>
-            {categories.map((c) => (
-              <FilterChip
-                key={c.slug}
-                active={cat === c.slug}
-                onClick={() => setCat(c.slug)}
+    <div className="grid gap-10 lg:grid-cols-[clamp(220px,22vw,300px)_1fr] lg:gap-16">
+      {/* RAIL DE FILTROS */}
+      <aside className="lg:sticky lg:top-24 lg:self-start">
+        {/* Buscador */}
+        <div className="group relative mb-8">
+          <SearchIcon className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-mute transition-colors group-focus-within:text-brand" />
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Buscar equipo…"
+            className="w-full rounded-full border border-line bg-ink-2 py-3 pl-11 pr-10 text-sm text-bone outline-none transition-colors placeholder:text-mute focus:border-brand"
+          />
+          {q && (
+            <button
+              onClick={() => setQ("")}
+              aria-label="Limpiar búsqueda"
+              className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-mute transition-colors hover:text-bone"
+            >
+              <CloseIcon />
+            </button>
+          )}
+        </div>
+
+        <p className="kicker mb-4 hidden lg:block">Categorías</p>
+
+        {/* Lista — vertical en desktop, scroll horizontal en móvil */}
+        <nav className="-mx-[var(--spacing-gutter)] flex gap-x-6 overflow-x-auto px-[var(--spacing-gutter)] pb-2 lg:mx-0 lg:flex-col lg:gap-x-0 lg:overflow-visible lg:border-l lg:border-line lg:px-0 lg:pb-0">
+          {items.map((it) => {
+            const active = cat === it.slug;
+            return (
+              <button
+                key={it.slug}
+                onClick={() => setCat(it.slug)}
+                className={cn(
+                  "group relative flex shrink-0 items-center gap-2.5 whitespace-nowrap py-2.5 text-left text-[0.95rem] transition-colors lg:shrink lg:justify-between lg:gap-4 lg:pl-5",
+                  active ? "text-bone" : "text-mute hover:text-bone"
+                )}
               >
-                {c.name}
-              </FilterChip>
+                {/* Marcador vertical (desktop) */}
+                <span
+                  className={cn(
+                    "absolute left-0 top-1/2 hidden w-0.5 -translate-y-1/2 rounded-full bg-brand transition-all duration-300 lg:block",
+                    active ? "h-6" : "h-0 group-hover:h-3"
+                  )}
+                />
+                <span className="flex items-center gap-2.5">
+                  {/* Punto (móvil) */}
+                  <span
+                    className={cn(
+                      "h-1.5 w-1.5 rounded-full transition-colors lg:hidden",
+                      active ? "bg-brand" : "bg-line"
+                    )}
+                  />
+                  <span className={cn(active && "font-medium")}>{it.name}</span>
+                </span>
+                <span
+                  className={cn(
+                    "font-mono text-xs tabular-nums transition-colors",
+                    active ? "text-brand" : "text-mute/70"
+                  )}
+                >
+                  {String(it.count).padStart(2, "0")}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+      </aside>
+
+      {/* RESULTADOS */}
+      <div>
+        <div className="mb-8 flex items-baseline justify-between border-b border-line pb-5">
+          <p className="font-mono text-xs uppercase tracking-widest text-mute">
+            {filtered.length} {filtered.length === 1 ? "equipo" : "equipos"}
+          </p>
+          {(cat !== "all" || q) && (
+            <button
+              onClick={() => {
+                setCat("all");
+                setQ("");
+              }}
+              className="font-mono text-xs uppercase tracking-widest text-mute transition-colors hover:text-brand"
+            >
+              Limpiar
+            </button>
+          )}
+        </div>
+
+        {filtered.length ? (
+          <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+            {filtered.map((p, i) => (
+              <ProductCard key={p.id} product={p} index={i} />
             ))}
           </div>
-          <div className="relative lg:w-72">
-            <input
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Buscar equipo…"
-              className="w-full rounded-full border border-line bg-ink-2 px-5 py-2.5 text-sm text-bone outline-none transition-colors placeholder:text-mute focus:border-brand"
-            />
+        ) : (
+          <div className="rounded-2xl border border-line bg-ink-2 p-16 text-center">
+            <p className="font-display text-2xl">Sin resultados</p>
+            <p className="mt-2 text-mute">Prueba con otra categoría o término.</p>
           </div>
-        </div>
+        )}
       </div>
-
-      <p className="mb-8 font-mono text-xs text-mute">
-        {filtered.length} {filtered.length === 1 ? "equipo" : "equipos"}
-      </p>
-
-      {filtered.length ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((p, i) => (
-            <ProductCard key={p.id} product={p} index={i} />
-          ))}
-        </div>
-      ) : (
-        <div className="rounded-2xl border border-line bg-ink-2 p-16 text-center">
-          <p className="font-display text-2xl">Sin resultados</p>
-          <p className="mt-2 text-mute">Prueba con otra categoría o término.</p>
-        </div>
-      )}
     </div>
-  );
-}
-
-function FilterChip({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "rounded-full border px-4 py-2 text-sm font-medium transition-colors",
-        active
-          ? "border-brand bg-brand text-white"
-          : "border-line text-mute hover:border-brand/50 hover:text-bone"
-      )}
-    >
-      {children}
-    </button>
   );
 }
