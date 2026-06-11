@@ -149,8 +149,7 @@ export function VideoScrolly() {
             className="vs-scene absolute inset-x-0 bottom-16 md:bottom-24"
             style={i > 0 ? { opacity: 0, visibility: "hidden" } : undefined}
           >
-            <p className="kicker !text-brand-glow">{s.kicker}</p>
-            <h2 className="mt-4 font-display font-bold text-white display-lg">
+            <h2 className="font-display font-bold text-white display-lg">
               <span className="block">{s.line1}</span>
               <span className="block text-brand-glow">{s.line2}</span>
             </h2>
