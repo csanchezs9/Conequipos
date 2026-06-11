@@ -98,16 +98,6 @@ export function MenuOverlay({
             "radial-gradient(80% 70% at 100% 0%, color-mix(in srgb, var(--color-brand) 55%, transparent) 0%, transparent 60%)",
         }}
       />
-      {/* Grid tecnico */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.06]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-        }}
-      />
-
       <div className="container-x relative flex h-svh flex-col">
         {/* Top */}
         <div className="mo-topbar flex h-18 shrink-0 items-center justify-between py-4">
