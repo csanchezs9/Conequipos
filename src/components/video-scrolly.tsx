@@ -60,9 +60,9 @@ export function VideoScrolly() {
         scrollTrigger: {
           trigger: root.current,
           start: "top top",
-          end: "+=160%",
+          end: "+=260%",
           pin: true,
-          scrub: 0.5,
+          scrub: 0.7,
           onUpdate: (st) => {
             const idx = Math.min(2, Math.floor(st.progress * 3));
             const el = root.current?.querySelector(".vs-count");
@@ -78,30 +78,30 @@ export function VideoScrolly() {
         tl.fromTo(
           panels[i],
           { yPercent: 100 },
-          { yPercent: 0, duration: 0.5, ease: "power2.out" },
-          at - 0.5
+          { yPercent: 0, duration: 0.85, ease: "power2.inOut" },
+          at - 0.85
         )
           // parallax interno: el video llega "frenando" dentro del panel
           .fromTo(
             videos[i],
-            { yPercent: -8 },
-            { yPercent: 0, duration: 0.5, ease: "power2.out" },
-            at - 0.5
+            { yPercent: -10 },
+            { yPercent: 0, duration: 0.85, ease: "power2.inOut" },
+            at - 0.85
           )
           .to(
             scenes[i - 1],
-            { autoAlpha: 0, y: -shift, duration: 0.22, ease: "power1.in" },
-            at - 0.5
+            { autoAlpha: 0, y: -shift, duration: 0.3, ease: "power1.in" },
+            at - 0.8
           )
           .fromTo(
             scenes[i],
             { autoAlpha: 0, y: shift },
-            { autoAlpha: 1, y: 0, duration: 0.28, ease: "power2.out" },
-            at - 0.18
+            { autoAlpha: 1, y: 0, duration: 0.4, ease: "power2.out" },
+            at - 0.4
           );
       }
       // respiro corto al final
-      tl.to({}, { duration: 0.35 });
+      tl.to({}, { duration: 0.4 });
 
       // Play/pause segun viewport
       ScrollTrigger.create({
