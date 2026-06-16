@@ -56,7 +56,27 @@ export function ScrollPaintText({
       return;
     }
 
+    // Si el texto ya está en viewport al montar (p.ej. primer bloque de la
+    // página), no hay recorrido de scroll para pintarlo: lo pintamos una vez,
+    // temporizado. Si está bajo el fold, se pinta con el scroll (scrub).
+    const rect = el.getBoundingClientRect();
+    const inViewOnMount =
+      rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
+
     const ctx = gsap.context(() => {
+      if (inViewOnMount) {
+        const tl = gsap.timeline({ delay: 0.15 });
+        wordEls.forEach((w, i) => {
+          tl.fromTo(
+            w,
+            { color: from },
+            { color: w.dataset.to || to, ease: "none", duration: 0.6 },
+            i * 0.08 // ola suave on-load
+          );
+        });
+        return;
+      }
+
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: el,
