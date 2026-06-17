@@ -10,7 +10,7 @@ export function VideoScrolly() {
     >
       <video
         className="absolute inset-0 h-full w-full object-cover"
-        src="/videos/obra-1.mp4"
+        src="/videos/hero.mp4"
         muted
         loop
         playsInline
