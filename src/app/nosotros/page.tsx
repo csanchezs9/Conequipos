@@ -43,7 +43,7 @@ export default function NosotrosPage() {
             <div className="mt-10 grid grid-cols-2 gap-4">
               <div className="relative aspect-3/4 overflow-hidden rounded-2xl border border-line bg-white">
                 <Image
-                  src="/pexels-pok-rie-33563-1188532.jpg"
+                  src="/fotos/pexels-pok-rie-33563-1188532.webp"
                   alt="Obra en construcción"
                   fill
                   sizes="(max-width: 1024px) 45vw, 22vw"
@@ -53,7 +53,7 @@ export default function NosotrosPage() {
               <div className="flex flex-col gap-4">
                 <div className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-ink-2">
                   <Image
-                    src="/pexels-construccion-total-2464540-6106878.jpg"
+                    src="/fotos/pexels-construccion-total-2464540-6106878.webp"
                     alt="Equipo trabajando en obra"
                     fill
                     sizes="(max-width: 1024px) 45vw, 22vw"
@@ -62,7 +62,7 @@ export default function NosotrosPage() {
                 </div>
                 <div className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-ink-2">
                   <Image
-                    src="/pexels-ehma-15794732.jpg"
+                    src="/fotos/pexels-ehma-15794732.webp"
                     alt="Maquinaria en construcción"
                     fill
                     sizes="(max-width: 1024px) 45vw, 22vw"
@@ -79,7 +79,7 @@ export default function NosotrosPage() {
               <div className="flex flex-col gap-4">
                 <div className="relative aspect-square overflow-hidden rounded-2xl border border-line bg-ink-2">
                   <Image
-                    src="/pexels-lucaspezeta-2333694.jpg"
+                    src="/fotos/pexels-lucaspezeta-2333694.webp"
                     alt="Obra en construcción"
                     fill
                     sizes="(max-width: 1024px) 45vw, 22vw"
@@ -88,7 +88,7 @@ export default function NosotrosPage() {
                 </div>
                 <div className="relative aspect-3/4 overflow-hidden rounded-2xl border border-line bg-white">
                   <Image
-                    src="/pexels-mehmet-aksoy-374584031-16764815.jpg"
+                    src="/fotos/pexels-mehmet-aksoy-374584031-16764815.webp"
                     alt="Grúa torre en obra"
                     fill
                     sizes="(max-width: 1024px) 45vw, 22vw"
@@ -98,7 +98,7 @@ export default function NosotrosPage() {
               </div>
               <div className="relative aspect-3/4 overflow-hidden rounded-2xl border border-line bg-ink-2">
                 <Image
-                  src="/pexels-rahibyaqubov-23978113.jpg"
+                  src="/fotos/pexels-rahibyaqubov-23978113.webp"
                   alt="Maquinaria pesada en obra"
                   fill
                   sizes="(max-width: 1024px) 45vw, 22vw"
@@ -148,7 +148,7 @@ export default function NosotrosPage() {
           <div data-reveal className="flex flex-col gap-8">
             <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-line bg-ink-2">
               <Image
-                src="/pexels-betongsmcsg-37121347.jpg"
+                src="/fotos/pexels-betongsmcsg-37121347.webp"
                 alt="Equipo de Conequipos en obra"
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
@@ -199,7 +199,7 @@ export default function NosotrosPage() {
             </div>
             <div className="relative aspect-4/3 overflow-hidden rounded-2xl border border-line bg-ink-2">
               <Image
-                src="/pexels-the-jd-darshan-solanki-215282-11959308.jpg"
+                src="/fotos/pexels-the-jd-darshan-solanki-215282-11959308.webp"
                 alt="Maquinaria de construcción en obra"
                 fill
                 sizes="(max-width: 1024px) 100vw, 45vw"
@@ -225,7 +225,7 @@ export default function NosotrosPage() {
           className="relative mt-12 aspect-16/8 w-full overflow-hidden rounded-2xl border border-line bg-ink-2"
         >
           <Image
-            src="/pexels-mikael-blomkvist-8961260.jpg"
+            src="/fotos/pexels-mikael-blomkvist-8961260.webp"
             alt="Equipo de Conequipos en obra"
             fill
             sizes="100vw"
@@ -269,7 +269,7 @@ export default function NosotrosPage() {
           className="relative mt-12 aspect-16/7 w-full overflow-hidden rounded-2xl border border-line bg-ink-2"
         >
           <Image
-            src="/pexels-screeny42-12032961.jpg"
+            src="/fotos/pexels-screeny42-12032961.webp"
             alt="Maquinaria de Conequipos en sitio"
             fill
             sizes="100vw"

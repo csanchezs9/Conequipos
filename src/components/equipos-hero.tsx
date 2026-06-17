@@ -88,7 +88,7 @@ export function EquiposHero() {
       {/* Imagen de fondo (obra) con Ken Burns */}
       <div ref={bg} className="absolute inset-0 z-0 will-change-transform">
         <Image
-          src="/pexels-pok-rie-33563-1188532.jpg"
+          src="/fotos/pexels-pok-rie-33563-1188532.webp"
           alt=""
           fill
           priority

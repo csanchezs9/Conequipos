@@ -28,7 +28,7 @@ export default function ContactoPage() {
       {/* Izquierda: foto a sangre con scrim (oculta en mobile) */}
       <div className="relative hidden lg:block">
         <Image
-          src="/pexels-ritesh-arya-1423700-3097103.jpg"
+          src="/fotos/pexels-ritesh-arya-1423700-3097103.webp"
           alt="Obra en construcción"
           fill
           priority

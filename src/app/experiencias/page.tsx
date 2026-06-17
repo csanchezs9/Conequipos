@@ -57,19 +57,19 @@ const CASE_STUDIES = [
     stat: "06:00",
     label: "Reemplazo en obra antes del vaciado",
     title: "Cómo salvamos una fundida en Sabaneta",
-    image: "/testimonials/reloj.jpg",
+    image: "/testimonials/card1.webp",
   },
   {
     stat: "0",
     label: "Días de obra perdidos por falla de equipo",
     title: "Disponibilidad que sostiene el cronograma",
-    image: "/testimonials/medellin-skyline.jpg",
+    image: "/testimonials/card2.webp",
   },
   {
     stat: "+15",
     label: "Años moviendo obras del Valle de Aburrá",
     title: "De una bodega a flota propia de alquiler",
-    image: "/testimonials/sabaneta-atardecer.jpg",
+    image: "/testimonials/card3.webp",
   },
 ];
 

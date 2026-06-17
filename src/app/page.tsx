@@ -12,16 +12,16 @@ const featured = products.filter((p) => p.image).slice(0, 7);
 // Foto temática (de obra, no de producto) por categoría — ambiente, no catálogo.
 const CAT_PHOTO: Record<string, string> = {
   "accesorios-y-herramientas":
-    "/pexels-sofoklis-saripanidis-13143901-31499725.jpg",
-  "andamios-y-formaletas": "/pexels-betongsmcsg-37121347.jpg",
-  "compresores-de-aire": "/pexels-ehma-15794732.jpg",
-  "equipos-de-compactacion": "/pexels-construccion-total-2464540-14420873.jpg",
-  "equipos-de-concreto": "/pexels-construccion-total-2464540-6106878.jpg",
-  "equipos-de-elevacion": "/pexels-mehmet-aksoy-374584031-16764815.jpg",
-  "equipos-de-iluminacion": "/pexels-lucaspezeta-2333694.jpg",
-  "equipos-de-movimiento-de-tierra": "/pexels-rahibyaqubov-23978113.jpg",
-  "equipos-electromecanicos": "/pexels-construccion-total-2464540-14466335.jpg",
-  "equipos-generadores-de-energia": "/pexels-pok-rie-33563-1188532.jpg",
+    "/fotos/pexels-sofoklis-saripanidis-13143901-31499725.webp",
+  "andamios-y-formaletas": "/fotos/pexels-betongsmcsg-37121347.webp",
+  "compresores-de-aire": "/fotos/pexels-ehma-15794732.webp",
+  "equipos-de-compactacion": "/fotos/pexels-construccion-total-2464540-14420873.webp",
+  "equipos-de-concreto": "/fotos/pexels-construccion-total-2464540-6106878.webp",
+  "equipos-de-elevacion": "/fotos/pexels-mehmet-aksoy-374584031-16764815.webp",
+  "equipos-de-iluminacion": "/fotos/pexels-lucaspezeta-2333694.webp",
+  "equipos-de-movimiento-de-tierra": "/fotos/pexels-rahibyaqubov-23978113.webp",
+  "equipos-electromecanicos": "/fotos/pexels-construccion-total-2464540-14466335.webp",
+  "equipos-generadores-de-energia": "/fotos/pexels-pok-rie-33563-1188532.webp",
 };
 
 // Las 6 categorías con más equipos — el resto vive en el catálogo completo.
@@ -138,7 +138,7 @@ export default function Home() {
       </section>
 
       {/* DESTACADOS — tablero de despacho en vivo (slab oscuro) */}
-      <section className="border-y border-line bg-bone text-ink">
+      <section className="border-y border-line bg-[#09090b] text-ink">
         <div className="container-x py-24 md:py-36">
           <div className="mb-12 max-w-2xl">
             <span className="text-sm font-semibold text-brand-glow">
@@ -341,7 +341,7 @@ export default function Home() {
       <section className="relative isolate overflow-hidden border-t border-line">
         {/* Imagen de obra a sangre + overlays para legibilidad y tinte de marca */}
         <img
-          src="/pexels-mehmet-aksoy-374584031-16764815.jpg"
+          src="/fotos/pexels-mehmet-aksoy-374584031-16764815.webp"
           alt="Obra en construcción con grúa torre"
           className="absolute inset-0 -z-20 h-full w-full object-cover"
         />
