@@ -71,7 +71,7 @@ export default function Home() {
 
       {/* CATEGORÍAS — masonry de especialidades (cada card lleva a su categoría) */}
       <section className="container-x py-16 md:py-20">
-        <div className="mb-10 max-w-2xl">
+        <div className="mb-10 w-full">
           <ScrollPaintText
             as="h2"
             className="display-lg text-balance"
@@ -80,7 +80,7 @@ export default function Home() {
               { text: "con su equipo listo", to: "#128a3c" },
             ]}
           />
-          <p data-reveal className="mt-5 max-w-md text-mute">
+          <p data-reveal="blur" className="mt-5 w-full text-mute">
             Equipos certificados, mantenidos y disponibles para despachar. Elige
             una especialidad y cotiza en minutos.
           </p>
@@ -140,16 +140,20 @@ export default function Home() {
       {/* DESTACADOS — tablero de despacho en vivo (slab oscuro) */}
       <section className="border-y border-line bg-[#09090b] text-ink">
         <div className="container-x py-24 md:py-36">
-          <div className="mb-12 max-w-2xl">
+          <div className="mb-16 w-full md:mb-24">
             <span className="text-sm font-semibold text-brand-glow">
               Los que más nos piden
             </span>
             <ScrollPaintText
               as="h2"
-              className="mt-4 display-lg max-w-[18ch]"
-              text="Equipos listos para entregar hoy"
+              className="mt-4 display-lg"
               from="rgba(255,255,255,0.25)"
               to="#ffffff"
+              forceScroll
+              segments={[
+                { text: "Equipos listos para" },
+                { text: "entregar hoy", to: "#1fb255" },
+              ]}
             />
           </div>
           <DispatchBoard products={featured} />

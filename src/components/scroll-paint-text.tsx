@@ -6,7 +6,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
 
-type Segment = { text: string; to?: string };
+type Segment = {
+  text: string;
+  to?: string;
+  /** Renderiza el segmento en su propia línea. */
+  block?: boolean;
+  /** Clases extra para el wrapper del segmento (p.ej. sangría). */
+  className?: string;
+};
 
 // Pinta el texto palabra por palabra, de claro a su color final, a medida que
 // se scrollea (efecto scrolly). Soporta segmentos con color destino propio
@@ -18,6 +25,7 @@ export function ScrollPaintText({
   to = "#0c0e0d",
   as: Tag = "p",
   className,
+  forceScroll = false,
 }: {
   /** Texto simple (un solo color destino `to`). */
   text?: string;
@@ -27,18 +35,22 @@ export function ScrollPaintText({
   to?: string;
   as?: "p" | "h2" | "h3";
   className?: string;
+  /** Pinta siempre con el scroll (scrub), aunque ya esté en viewport. */
+  forceScroll?: boolean;
 }) {
   const root = useRef<HTMLElement>(null);
 
   const segs: Segment[] = segments ?? [{ text: text ?? "", to }];
 
-  // Palabras aplanadas con su color destino.
-  const words: { w: string; to: string }[] = [];
-  segs.forEach((seg, si) => {
-    const ws = seg.text.split(" ").filter(Boolean);
-    ws.forEach((w) => words.push({ w, to: seg.to ?? to }));
-    if (si < segs.length - 1) words.push({ w: " ", to: seg.to ?? to });
-  });
+  // Cada segmento conserva sus palabras (cada una es un .sp-word que la
+  // animación pinta en orden). Un segmento `block` se renderiza en su propia
+  // línea y admite clases extra (p.ej. sangría).
+  const segWords = segs.map((seg) => ({
+    block: seg.block,
+    className: seg.className,
+    to: seg.to ?? to,
+    words: seg.text.split(" ").filter(Boolean),
+  }));
 
   useEffect(() => {
     const el = root.current;
@@ -47,9 +59,10 @@ export function ScrollPaintText({
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const wordEls = el.querySelectorAll<HTMLElement>(".sp-word");
 
-    // Con reduce o en mobile (scrub poco fiable en touch) dejamos el texto
-    // ya en su color final, sin scrubbing.
-    if (reduce || window.innerWidth < 1024) {
+    // Con reduce dejamos el texto ya en su color final, sin animar. En mobile
+    // el scrub táctil es poco fiable, así que solo lo evitamos cuando NO se
+    // fuerza el scroll.
+    if (reduce || (!forceScroll && window.innerWidth < 1024)) {
       wordEls.forEach((w) => {
         w.style.color = w.dataset.to || to;
       });
@@ -59,9 +72,10 @@ export function ScrollPaintText({
     // Si el texto ya está en viewport al montar (p.ej. primer bloque de la
     // página), no hay recorrido de scroll para pintarlo: lo pintamos una vez,
     // temporizado. Si está bajo el fold, se pinta con el scroll (scrub).
+    // forceScroll ignora esto y usa siempre el scrub.
     const rect = el.getBoundingClientRect();
     const inViewOnMount =
-      rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
+      !forceScroll && rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
 
     const ctx = gsap.context(() => {
       if (inViewOnMount) {
@@ -101,14 +115,28 @@ export function ScrollPaintText({
 
   return (
     <Tag ref={root as never} className={className}>
-      {words.map((it, i) => (
-        <span key={i} className="sp-word" data-to={it.to}>
-          {it.w === " " ? " " : it.w}
-          {it.w !== " " && i < words.length - 1 && words[i + 1].w !== " "
-            ? " "
-            : ""}
-        </span>
-      ))}
+      {segWords.map((seg, si) => {
+        const inner = seg.words.map((w, wi) => (
+          <span key={wi} className="sp-word" data-to={seg.to}>
+            {w}
+            {wi < seg.words.length - 1 ? " " : ""}
+          </span>
+        ));
+        // Inline: une los segmentos con un espacio entre ellos.
+        if (!seg.block) {
+          return (
+            <span key={si}>
+              {inner}
+              {si < segWords.length - 1 && !segWords[si + 1].block ? " " : ""}
+            </span>
+          );
+        }
+        return (
+          <span key={si} className={`block ${seg.className ?? ""}`}>
+            {inner}
+          </span>
+        );
+      })}
     </Tag>
   );
 }

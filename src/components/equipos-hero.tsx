@@ -25,7 +25,7 @@ export function EquiposHero() {
             ".eh-line-in",
             { yPercent: 115, duration: 1.05, stagger: 0.1 }
           )
-          .from(".eh-sub", { y: 20, opacity: 0, duration: 0.9 }, "-=0.6")
+          .from(".eh-sub", { y: 20, opacity: 0, filter: "blur(18px)", duration: 0.9 }, "-=0.6")
           .from(".eh-meta", { y: 14, opacity: 0, duration: 0.8, stagger: 0.08 }, "-=0.6");
 
         // Ken Burns sutil sobre la imagen de fondo
