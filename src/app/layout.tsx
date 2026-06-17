@@ -44,12 +44,12 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${inter.variable} ${geistMono.variable} ${space.variable} h-full`}
+      className={`${inter.variable} ${geistMono.variable} ${space.variable} h-full overflow-x-hidden`}
     >
       <body className="min-h-full overflow-x-hidden bg-ink text-bone grain">
         <SmoothScroll>
           <Header />
-          <main>{children}</main>
+          <main className="overflow-x-hidden">{children}</main>
           <Footer />
           <WhatsAppFab />
         </SmoothScroll>
