@@ -33,7 +33,7 @@ export default function NosotrosPage() {
             <h2 className="mt-4 font-display text-4xl font-bold leading-[1.05] md:text-5xl">
               Nacimos en la obra, no en una oficina
             </h2>
-            <p className="mt-6 max-w-prose text-lg text-mute">
+            <p data-reveal="blur" className="mt-6 max-w-prose text-lg text-mute">
               Conequipos arrancó en Itagüí resolviendo algo simple: que a
               ninguna obra le falte el equipo cuando lo necesita. Llevamos años
               moviendo maquinaria por todo el Valle de Aburrá, y seguimos
@@ -252,7 +252,7 @@ export default function NosotrosPage() {
               Itagüí, Antioquia · Colombia
             </p>
           </div>
-          <div data-reveal className="md:col-span-2">
+          <div data-reveal="blur" className="md:col-span-2">
             <p className="text-lg text-mute">
               Somos un equipo que mueve maquinaria todos los días por el Valle de
               Aburrá. Conocemos la obra porque vivimos de ella: sabemos qué

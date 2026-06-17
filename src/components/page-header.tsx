@@ -18,7 +18,7 @@ export function PageHeader({
       <div className="container-x">
         <h1 className="display-lg max-w-[18ch]">{title}</h1>
         {description && (
-          <p className="mt-6 max-w-xl text-balance text-lg text-mute">
+          <p data-reveal="blur" className="mt-6 max-w-xl text-balance text-lg text-mute">
             {description}
           </p>
         )}
