@@ -46,7 +46,7 @@ export default function RootLayout({
       lang="es"
       className={`${inter.variable} ${geistMono.variable} ${space.variable} h-full`}
     >
-      <body className="min-h-full bg-ink text-bone grain">
+      <body className="min-h-full overflow-x-hidden bg-ink text-bone grain">
         <SmoothScroll>
           <Header />
           <main>{children}</main>

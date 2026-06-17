@@ -33,7 +33,7 @@ export function ScrollPaintText({
   segments?: Segment[];
   from?: string;
   to?: string;
-  as?: "p" | "h2" | "h3";
+  as?: "p" | "h1" | "h2" | "h3";
   className?: string;
   /** Pinta siempre con el scroll (scrub), aunque ya esté en viewport. */
   forceScroll?: boolean;
