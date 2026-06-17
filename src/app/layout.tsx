@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, Geist_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/smooth-scroll";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { WhatsAppFab } from "@/components/whatsapp-fab";
 
-const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
+const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 const space = Space_Grotesk({
   variable: "--font-space",
@@ -44,7 +44,7 @@ export default function RootLayout({
   return (
     <html
       lang="es"
-      className={`${geist.variable} ${geistMono.variable} ${space.variable} h-full`}
+      className={`${inter.variable} ${geistMono.variable} ${space.variable} h-full`}
     >
       <body className="min-h-full bg-ink text-bone grain">
         <SmoothScroll>
