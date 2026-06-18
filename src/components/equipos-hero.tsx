@@ -49,7 +49,7 @@ export function EquiposHero() {
   return (
     <section
       ref={root}
-      className="relative overflow-hidden bg-ink pt-28 pb-10 md:pt-36 md:pb-14"
+      className="relative overflow-hidden bg-ink pt-28 pb-6 md:pt-36 md:pb-10"
     >
       {/* Canvas de puntos interactivo */}
       <DotCanvas className="absolute inset-0 z-0 h-full w-full" />
@@ -86,40 +86,37 @@ export function EquiposHero() {
           forceScroll
         />
 
-        {/* Línea divisoria + meta */}
-        <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          {/* Subtítulo */}
-          <p className="eh-sub max-w-md text-balance text-lg text-mute">
-            Maquinaria certificada y mantenida, lista para tu obra. Filtra por
-            categoría o busca el equipo que necesitas.
-          </p>
+        {/* Subtítulo — mismo ancho que el titular */}
+        <p className="eh-sub mt-12 w-full text-balance text-lg text-mute md:max-w-[54%]">
+          Maquinaria certificada y mantenida, lista para tu obra. Filtra por
+          categoría o busca el equipo que necesitas.
+        </p>
 
-          {/* Contadores */}
-          <div className="eh-meta flex shrink-0 gap-10">
-            <div>
-              <div
-                className="font-mono tabular-nums text-4xl font-bold leading-none text-bone md:text-5xl"
-              >
-                <span className="eh-count" data-to={products.length}>
-                  {String(products.length).padStart(2, "0")}
-                </span>
-              </div>
-              <p className="mt-2 text-xs font-medium uppercase tracking-widest text-mute">
-                Equipos
-              </p>
+        {/* Contadores — a la derecha */}
+        <div className="eh-meta mt-10 flex justify-end gap-10">
+          <div>
+            <div
+              className="font-mono tabular-nums text-4xl font-bold leading-none text-bone md:text-5xl"
+            >
+              <span className="eh-count" data-to={products.length}>
+                {String(products.length).padStart(2, "0")}
+              </span>
             </div>
-            <div>
-              <div
-                className="font-mono tabular-nums text-4xl font-bold leading-none text-bone md:text-5xl"
-              >
-                <span className="eh-count" data-to={categories.length}>
-                  {String(categories.length).padStart(2, "0")}
-                </span>
-              </div>
-              <p className="mt-2 text-xs font-medium uppercase tracking-widest text-mute">
-                Categorías
-              </p>
+            <p className="mt-2 text-xs font-medium uppercase tracking-widest text-mute">
+              Equipos
+            </p>
+          </div>
+          <div>
+            <div
+              className="font-mono tabular-nums text-4xl font-bold leading-none text-bone md:text-5xl"
+            >
+              <span className="eh-count" data-to={categories.length}>
+                {String(categories.length).padStart(2, "0")}
+              </span>
             </div>
+            <p className="mt-2 text-xs font-medium uppercase tracking-widest text-mute">
+              Categorías
+            </p>
           </div>
         </div>
       </div>

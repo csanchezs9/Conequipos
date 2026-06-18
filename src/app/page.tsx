@@ -71,7 +71,7 @@ export default function Home() {
 
       {/* CATEGORÍAS — masonry de especialidades (cada card lleva a su categoría) */}
       <section className="container-x py-16 md:py-20">
-        <div className="mb-10 w-full">
+        <div className="mb-10 w-full text-center">
           <ScrollPaintText
             as="h2"
             className="display-lg text-balance"
