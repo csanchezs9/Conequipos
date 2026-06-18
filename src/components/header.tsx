@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/logo";
-import { MenuOverlay } from "@/components/menu-overlay";
+import { StaggeredMenu } from "@/components/staggered-menu";
 import { cn } from "@/lib/utils";
 
 export function Header() {
@@ -68,7 +68,7 @@ export function Header() {
         </div>
       </header>
 
-      <MenuOverlay open={open} onClose={() => setOpen(false)} />
+      <StaggeredMenu open={open} onClose={() => setOpen(false)} />
     </>
   );
 }

@@ -26,26 +26,29 @@ export default function ContactoPage() {
   return (
     <section className="grid min-h-screen lg:grid-cols-2">
       {/* Izquierda: foto a sangre con scrim (oculta en mobile) */}
-      <div className="relative hidden lg:block">
-        <Image
-          src="/fotos/pexels-ritesh-arya-1423700-3097103.webp"
-          alt="Obra en construcción"
-          fill
-          priority
-          sizes="50vw"
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10" />
-        <div className="absolute inset-x-0 bottom-0 p-12 xl:p-16">
-          <span className="text-sm font-medium text-white/70">Contacto</span>
-          <p className="mt-3 max-w-md font-display text-4xl font-bold leading-[1.05] text-white xl:text-5xl">
-            Hablemos de tu obra
-          </p>
+      <div className="hidden lg:sticky lg:top-0 lg:block lg:h-screen lg:self-start">
+        {/* Padre relative para el Image fill (sticky no es valido como padre de fill) */}
+        <div className="relative h-full w-full overflow-hidden">
+          <Image
+            src="/fotos/pexels-ritesh-arya-1423700-3097103.webp"
+            alt="Obra en construcción"
+            fill
+            priority
+            sizes="50vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-black/10" />
+          <div className="absolute inset-x-0 bottom-0 p-12 xl:p-16">
+            <span className="text-sm font-medium text-white/70">Contacto</span>
+            <p className="mt-3 max-w-md font-display text-4xl font-bold leading-[1.05] text-white xl:text-5xl">
+              Hablemos de tu obra
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Derecha: formulario, verticalmente centrado */}
-      <div className="flex items-center justify-center px-6 pb-20 pt-32 md:pb-24 md:pt-40 lg:px-16">
+      <div className="flex min-h-screen flex-col items-center justify-center px-6 py-28 md:py-32 lg:px-16">
         <div className="w-full max-w-lg">
           <span className="kicker">Hablemos</span>
           <h1 className="mt-3 font-display text-3xl font-bold leading-[1.05] md:text-4xl">
