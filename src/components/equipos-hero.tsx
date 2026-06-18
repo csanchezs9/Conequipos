@@ -3,78 +3,50 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { categories, products } from "@/data/catalog";
-
-if (typeof window !== "undefined") gsap.registerPlugin(ScrollTrigger);
-
-const STRIP = products.filter((p) => p.image).slice(0, 14);
+import { ScrollPaintText } from "@/components/scroll-paint-text";
+import { DotCanvas } from "@/components/dot-canvas";
 
 export function EquiposHero() {
   const root = useRef<HTMLElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-  const bg = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) return;
+
     const ctx = gsap.context(() => {
-      if (!reduce) {
-        // Reveal del titular por lineas + meta
-        const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
-        tl.from(
-            ".eh-line-in",
-            { yPercent: 115, duration: 1.05, stagger: 0.1 }
-          )
-          .from(".eh-sub", { y: 20, opacity: 0, filter: "blur(18px)", duration: 0.9 }, "-=0.6")
-          .from(".eh-meta", { y: 14, opacity: 0, duration: 0.8, stagger: 0.08 }, "-=0.6");
+      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
 
-        // Ken Burns sutil sobre la imagen de fondo
-        gsap.to(bg.current, {
-          scale: 1.12,
-          duration: 18,
-          ease: "sine.inOut",
-          yoyo: true,
-          repeat: -1,
-        });
+      tl.from(".eh-sub", {
+        y: 18,
+        opacity: 0,
+        filter: "blur(14px)",
+        duration: 0.9,
+      })
+        .from(
+          ".eh-meta",
+          { y: 12, opacity: 0, duration: 0.7, stagger: 0.1 },
+          "-=0.5"
+        )
+        .from(
+          ".eh-rule",
+          { scaleX: 0, duration: 0.8, transformOrigin: "left" },
+          "-=0.6"
+        );
 
-        // Contadores
-        gsap.utils.toArray<HTMLElement>(".eh-count").forEach((el) => {
-          const end = Number(el.dataset.to || "0");
-          const obj = { v: 0 };
-          gsap.to(obj, {
-            v: end,
-            duration: 1.6,
-            ease: "power2.out",
-            delay: 0.5,
-            onUpdate: () =>
-              (el.textContent = String(Math.round(obj.v)).padStart(2, "0")),
-          });
+      // Contadores
+      gsap.utils.toArray<HTMLElement>(".eh-count").forEach((el) => {
+        const end = Number(el.dataset.to ?? "0");
+        const obj = { v: 0 };
+        gsap.to(obj, {
+          v: end,
+          duration: 1.8,
+          ease: "power2.out",
+          delay: 0.4,
+          onUpdate: () =>
+            (el.textContent = String(Math.round(obj.v)).padStart(2, "0")),
         });
-      }
-
-      // Tira de imagenes: loop infinito + arrastre por scroll
-      if (track.current) {
-        const loop = gsap.to(track.current, {
-          xPercent: -50,
-          duration: 40,
-          ease: "none",
-          repeat: -1,
-        });
-        if (!reduce) {
-          ScrollTrigger.create({
-            trigger: root.current,
-            start: "top bottom",
-            end: "bottom top",
-            onUpdate: (self) => {
-              gsap.to(loop, {
-                timeScale: 1 + Math.min(6, Math.abs(self.getVelocity()) / 200),
-                duration: 0.4,
-                overwrite: true,
-              });
-            },
-          });
-        }
-      }
+      });
     }, root);
 
     return () => ctx.revert();
@@ -83,98 +55,82 @@ export function EquiposHero() {
   return (
     <section
       ref={root}
-      className="relative isolate overflow-hidden border-b border-line pt-36 pb-10 md:pt-44 md:pb-14"
+      className="relative overflow-hidden border-b border-line bg-ink pt-28 pb-10 md:pt-36 md:pb-14"
     >
-      {/* Imagen de fondo (obra) con Ken Burns */}
-      <div ref={bg} className="absolute inset-0 z-0 will-change-transform">
+      {/* Canvas de puntos interactivo */}
+      <DotCanvas className="absolute inset-0 z-0 h-full w-full" />
+
+      {/* Foto lateral derecha — sutil, solo desktop */}
+      <div className="absolute inset-y-0 right-0 z-[1] hidden w-[42%] md:block">
         <Image
-          src="/fotos/pexels-pok-rie-33563-1188532.webp"
+          src="/fotos/pexels-mehmet-aksoy-374584031-16764815.webp"
           alt=""
           fill
+          sizes="42vw"
+          className="object-cover object-center opacity-80"
           priority
-          sizes="100vw"
-          className="object-cover"
         />
+        {/* Fusión suave con el fondo blanco */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/30 via-transparent to-ink/60" />
       </div>
-      {/* Velo blanco: imagen visible, texto legible a la izquierda */}
-      <div className="absolute inset-0 z-[1] bg-white/15" />
-      <div className="absolute inset-0 z-[1] bg-gradient-to-r from-white via-white/60 to-transparent" />
-      <div className="absolute inset-0 z-[1] bg-gradient-to-t from-white/80 via-transparent to-transparent" />
-
-      {/* Grid tecnico de fondo */}
-      <div
-        className="pointer-events-none absolute inset-0 z-[2] opacity-40"
-        style={{
-          backgroundImage:
-            "linear-gradient(var(--color-line) 1px, transparent 1px), linear-gradient(90deg, var(--color-line) 1px, transparent 1px)",
-          backgroundSize: "72px 72px",
-          maskImage: "radial-gradient(120% 80% at 50% 0%, #000 30%, transparent 75%)",
-          WebkitMaskImage:
-            "radial-gradient(120% 80% at 50% 0%, #000 30%, transparent 75%)",
-        }}
-      />
 
       <div className="container-x relative z-10">
-        <div className="flex items-start justify-end gap-6">
+        {/* Kicker */}
+        <p className="eh-sub kicker mb-8">Catálogo de equipos</p>
+
+        {/* Titular */}
+        <style>{`.eh-title .sp-word { color: #c9ccc4; }`}</style>
+        <ScrollPaintText
+          as="h1"
+          className="eh-title font-display font-bold display-xl"
+          segments={[
+            { text: "Equipos para", to: "#0c0e0d", block: true },
+            { text: "construcción", to: "#128a3c", block: true },
+          ]}
+          from="#c9ccc4"
+          forceScroll
+        />
+
+        {/* Línea divisoria + meta */}
+        <div className="mt-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          {/* Subtítulo */}
+          <p className="eh-sub max-w-md text-balance text-lg text-mute">
+            Maquinaria certificada y mantenida, lista para tu obra. Filtra por
+            categoría o busca el equipo que necesitas.
+          </p>
+
           {/* Contadores */}
-          <div className="eh-meta flex shrink-0 gap-8 text-right">
+          <div className="eh-meta flex shrink-0 gap-10">
             <div>
-              <div className="font-display text-3xl font-bold leading-none md:text-4xl">
+              <div
+                className="font-mono tabular-nums text-4xl font-bold leading-none text-bone md:text-5xl"
+              >
                 <span className="eh-count" data-to={products.length}>
                   {String(products.length).padStart(2, "0")}
                 </span>
               </div>
-              <p className="mt-1 text-[0.72rem] font-medium text-mute">
+              <p className="mt-2 text-xs font-medium uppercase tracking-widest text-mute">
                 Equipos
               </p>
             </div>
             <div>
-              <div className="font-display text-3xl font-bold leading-none md:text-4xl">
+              <div
+                className="font-mono tabular-nums text-4xl font-bold leading-none text-bone md:text-5xl"
+              >
                 <span className="eh-count" data-to={categories.length}>
                   {String(categories.length).padStart(2, "0")}
                 </span>
               </div>
-              <p className="mt-1 text-[0.72rem] font-medium text-mute">
+              <p className="mt-2 text-xs font-medium uppercase tracking-widest text-mute">
                 Categorías
               </p>
             </div>
           </div>
         </div>
 
-        {/* Titular */}
-        <h1 className="mt-6 font-display font-bold display-xl">
-          <span className="block overflow-hidden pb-[0.1em]">
-            <span className="eh-line-in block">Equipos para</span>
-          </span>
-          <span className="block overflow-hidden pb-[0.1em]">
-            <span className="eh-line-in block text-brand">construcción</span>
-          </span>
-        </h1>
-
-        <p className="eh-sub mt-7 max-w-xl text-balance text-lg text-mute">
-          Maquinaria certificada y mantenida, lista para tu obra. Filtra por
-          categoría o busca el equipo que necesitas.
-        </p>
-      </div>
-
-      {/* Tira de imagenes en loop */}
-      <div className="relative z-10 mt-12 overflow-hidden md:mt-16">
-        <div ref={track} className="flex w-max gap-4 will-change-transform">
-          {[...STRIP, ...STRIP].map((p, i) => (
-            <div
-              key={i}
-              className="relative h-24 w-36 shrink-0 overflow-hidden rounded-xl border border-line bg-white md:h-32 md:w-48"
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={p.image!}
-                alt=""
-                className="h-full w-full object-contain p-3"
-                loading="lazy"
-              />
-            </div>
-          ))}
-        </div>
+        {/* Línea decorativa */}
+        <div className="eh-rule mt-10 h-px w-full bg-line" />
       </div>
     </section>
   );
