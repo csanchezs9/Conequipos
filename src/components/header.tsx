@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/logo";
 import { StaggeredMenu } from "@/components/staggered-menu";
@@ -9,7 +9,10 @@ import { cn } from "@/lib/utils";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
+  // Auto-hide: en mobile la barra se esconde al bajar y reaparece al subir.
+  const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
+  const lastY = useRef(0);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -17,11 +20,16 @@ export function Header() {
     // video siga cubriéndola.
     const hero = document.querySelector<HTMLElement>("[data-video-hero]");
     const onScroll = () => {
+      const y = window.scrollY;
       if (hero) {
         setScrolled(hero.getBoundingClientRect().bottom < 80);
       } else {
-        setScrolled(window.scrollY > 40);
+        setScrolled(y > 40);
       }
+      // Dirección: ocultar al bajar (pasado un umbral), mostrar al subir.
+      if (y > lastY.current && y > 120) setHidden(true);
+      else if (y < lastY.current) setHidden(false);
+      lastY.current = y;
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -41,7 +49,9 @@ export function Header() {
           "fixed inset-x-0 top-0 z-50 border-b transition-all duration-500 [transition-timing-function:var(--ease-out-expo)]",
           scrolled
             ? "border-line bg-ink/85 backdrop-blur-xl"
-            : "border-transparent bg-transparent"
+            : "border-transparent bg-transparent",
+          // Solo mobile: se esconde al bajar. En md+ siempre visible.
+          hidden && !open && "max-md:-translate-y-full"
         )}
       >
         <div className="container-x flex h-18 items-center justify-between py-4">
